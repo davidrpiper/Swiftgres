@@ -1,0 +1,135 @@
+/*
+ *  Connector.swift
+ *  Swiftgres
+ *
+ *  Copyright (c) 2018 David Piper, @_davidpiper
+ *
+ *  This software may be modified and distributed under the terms
+ *  of the MIT license. See the LICENSE file for details.
+ */
+
+// TODO: Define proper return types
+public protocol Connector {
+    func execute(_ sqlStatement: PostgresStatement.AlterCollationStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterDatabaseStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterDefaultPrivilegesStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterDomainStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterEnumStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterEventTrigStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterExtensionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterExtensionContentsStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterFdwStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterForeignServerStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterForeignTableStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterFunctionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterGroupStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterObjectDependsStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterObjectSchemaStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterOpFamilyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterOperatorStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterOwnerStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterPolicyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterPublicationStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterRoleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterRoleSetStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterSeqStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterSubscriptionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterSystemStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterTSConfigurationStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterTSDictionaryStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterTableStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterTblSpcStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterTypeStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterUserMappingStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AnalyzeStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CheckPointStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ClosePortalStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ClusterStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CommentStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ConstraintsSetStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CopyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateAmStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateAsStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateAssertStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateCastStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateConversionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateDomainStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateEventTrigStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateExtensionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateFdwStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateForeignServerStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateForeignTableStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateFunctionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateGroupStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateMatViewStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateOpClassStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateOpFamilyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreatePLangStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreatePolicyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreatePublicationStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateRoleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateSchemaStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateSeqStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateStatsStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateSubscriptionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateTableSpaceStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateTransformStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateTrigStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateUserStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreateUserMappingStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CreatedbStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DeallocateStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DeclareCursorStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DefineStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DeleteStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DiscardStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DoStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropAssertStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropCastStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropOpClassStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropOpFamilyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropOwnedStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropPLangStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropRoleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropSubscriptionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropTableSpaceStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropTransformStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropUserMappingStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropdbStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ExecuteStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ExplainStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.FetchStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.GrantStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.GrantRoleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ImportForeignSchemaStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.IndexStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.InsertStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ListenStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.LoadStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.LockStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.NotifyStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.PrepareStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ReassignOwnedStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RefreshMatViewStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ReindexStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RemoveAggrStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RemoveFuncStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RemoveOperStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RenameStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RevokeStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RevokeRoleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.RuleStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.SecLabelStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.SelectStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.TransactionStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.TruncateStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.UnlistenStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.UpdateStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.VacuumStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.VariableResetStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.VariableSetStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.VariableShowStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.ViewStatement) -> Bool
+}
