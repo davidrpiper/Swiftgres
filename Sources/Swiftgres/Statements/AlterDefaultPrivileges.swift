@@ -1,5 +1,5 @@
 /*
- * AlterDefaultPrivileges.swift
+ *  AlterDefaultPrivileges.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,17 +9,16 @@
  */
 
 public extension PostgresStatement {
-    public struct AlterDefaultPrivileges: CommitablePostgresStatement {
-        private let defAclOptionList: DefAclOptionList
-        private let defAclAction: DefAclAction
-        
-        public init(_ defAclOptionList: DefAclOptionList, _ defAclAction: DefAclAction) {
-            self.defAclOptionList = defAclOptionList
-            self.defAclAction = defAclAction
-        }
+    public static func alterDefaultPrivileges(_ defAclOptionList: DefAclOptionList, _ defAclAction: DefAclAction) -> AlterDefaultPrivilegesStatement {
+        return AlterDefaultPrivilegesStatement(defAclOptionList: defAclOptionList, defAclAction: defAclAction)
+    }
+    
+    public struct AlterDefaultPrivilegesStatement: CommitablePostgresStatement {
+        let defAclOptionList: DefAclOptionList
+        let defAclAction: DefAclAction
         
         public func toSql() throws -> String {
             return try "\(KW.ALTER) \(KW.DEFAULT) \(KW.PRIVILEGES) \(defAclOptionList.sqlString()) \(defAclAction.sqlString())"
         }
-	}
+    }
 }

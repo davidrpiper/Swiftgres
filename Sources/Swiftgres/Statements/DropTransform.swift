@@ -1,5 +1,5 @@
 /*
- *  AlterType.swift
+ * DropTransformStmt.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,7 +9,7 @@
  */
 
 public extension PostgresStatement {
-	public struct AlterTypeStatement {
+	public struct DropTransformStatement {
 		
 	}
 }

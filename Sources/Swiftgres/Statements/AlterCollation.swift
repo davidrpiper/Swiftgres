@@ -9,63 +9,50 @@
  */
 
 public extension PostgresStatement {
-    
-    private struct AlterCollationRefreshVersion: CommitablePostgresStatement {
-        let name: AnyName
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.REFRESH) \(KW.VERSION);"
-        }
+    public static func alterCollation(_ name: AnyName, renameTo toName: AnyName) -> AlterCollationStatement {
+        return .renameTo(name, toName: toName)
     }
     
-    private struct AlterCollationRenameTo: CommitablePostgresStatement {
-        let name: AnyName
-        let toName: Name
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.RENAME) \(KW.TO) \(toName.sqlString());"
-        }
+    public static func alterCollation(_ name: AnyName, ownerTo owner: RoleSpec) -> AlterCollationStatement {
+        return .ownerTo(name, toRole: owner)
     }
     
-    private struct AlterCollationOwnerTo: CommitablePostgresStatement {
-        let name: AnyName
-        let role: RoleSpec
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.OWNER) \(KW.TO) \(role.sqlString());"
-        }
+    public static func alterCollation(_ name: AnyName, setSchema schema: Name) -> AlterCollationStatement {
+        return .setSchema(name, schema: schema)
     }
     
-    private struct AlterCollationSetSchema: CommitablePostgresStatement {
-        let name: AnyName
-        let schema: Name
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.SET) \(KW.SCHEMA) \(schema.sqlString());"
-        }
+    public static func alterCollation(_ name: AnyName) -> AlterCollationRefreshVersion {
+        return AlterCollationRefreshVersionIntermediate(name: name)
     }
     
-	public struct AlterCollation {
-        private let name: AnyName
+    public enum AlterCollationStatement: CommitablePostgresStatement {
+        case renameTo(AnyName, toName: AnyName)
+        case ownerTo(AnyName, toRole: RoleSpec)
+        case setSchema(AnyName, schema: Name)
+        case refreshVersion(AnyName)
         
-        public init(_ name: AnyName) {
-            self.name = name
+        public func toSql() throws -> String {
+            switch self {
+            case .renameTo(let name, let toName):
+                return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.RENAME) \(KW.TO) \(toName.sqlString());"
+            case .ownerTo(let name, let toRole):
+                return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.OWNER) \(KW.TO) \(toRole.sqlString());"
+            case .setSchema(let name, let schema):
+                return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.SET) \(KW.SCHEMA) \(schema.sqlString());"
+            case .refreshVersion(let name):
+                return try "\(KW.ALTER) \(KW.COLLATION) \(name.sqlString()) \(KW.REFRESH) \(KW.VERSION);"
+            }
         }
-        
-        public func refreshVersion() -> CommitablePostgresStatement {
-            return AlterCollationRefreshVersion(name: name)
+    }
+
+    private struct AlterCollationRefreshVersionIntermediate: AlterCollationRefreshVersion {
+        let name: AnyName
+        public func refreshVersion() -> AlterCollationStatement {
+            return .refreshVersion(name)
         }
-        
-        public func renameTo(_ toName: Name) -> CommitablePostgresStatement {
-            return AlterCollationRenameTo(name: name, toName: toName)
-        }
-        
-        public func ownerTo(_ owner: RoleSpec) -> CommitablePostgresStatement {
-            return AlterCollationOwnerTo(name: name, role: owner)
-        }
-        
-        public func setSchema(_ schema: Name) -> CommitablePostgresStatement {
-            return AlterCollationSetSchema(name: name, schema: schema)
-        }
-	}
+    }
+}
+
+public protocol AlterCollationRefreshVersion {
+    func refreshVersion() -> PostgresStatement.AlterCollationStatement
 }

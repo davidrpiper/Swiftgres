@@ -9,90 +9,50 @@
  */
 
 public extension PostgresStatement {
-    
-    private struct AlterDatabaseRenameTo: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let toName: DatabaseName
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.RENAME) \(KW.TO) \(toName.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, renameTo toName: DatabaseName) -> AlterDatabaseStatement {
+        return .renameTo(dbName, toName: toName)
     }
     
-    private struct AlterDatabaseOwnerTo: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let owner: RoleSpec
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.OWNER) \(KW.TO) \(owner.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, ownerTo owner: RoleSpec) -> AlterDatabaseStatement {
+        return .ownerTo(dbName, owner: owner)
     }
     
-    private struct AlterDatabaseWith: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let createDbOptList: CreateDbOptList
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.WITH) \(createDbOptList.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, with optList: CreateDbOptList) -> AlterDatabaseStatement {
+        return .with(dbName, optList: optList)
     }
     
-    private struct AlterDatabaseOpts: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let createDbOptList: CreateDbOptList
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(createDbOptList.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, _ optList: CreateDbOptList) -> AlterDatabaseStatement {
+        return .with(dbName, optList: optList)
     }
     
-    private struct AlterDatabaseSetTablespace: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let tablespace: Name
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.SET) \(KW.TABLESPACE) \(tablespace.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, setTableSpace tablespace: Name) -> AlterDatabaseStatement {
+        return .setTablespace(dbName, tablespace: tablespace)
     }
     
-    private struct AlterDatabaseSetReset: CommitablePostgresStatement {
-        let dbName: DatabaseName
-        let setReset: SetResetClause
-        
-        public func toSql() throws -> String {
-            return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(setReset.sqlString());"
-        }
+    public static func alterDatabase(_ dbName: DatabaseName, setResetClause clause: SetResetClause) -> AlterDatabaseStatement {
+        return .setResetClause(dbName, clause: clause)
     }
     
-	public struct AlterDatabase {
-        private let dbName: DatabaseName
+    public enum AlterDatabaseStatement: CommitablePostgresStatement {
+        case renameTo(DatabaseName, toName: DatabaseName)
+        case ownerTo(DatabaseName, owner: RoleSpec)
+        case with(DatabaseName, optList: CreateDbOptList)
+        case setTablespace(DatabaseName, tablespace: Name)
+        case setResetClause(DatabaseName, clause: SetResetClause)
         
-        public init(_ dbName: DatabaseName) {
-            self.dbName = dbName
-        }
-        
-        public func renameTo(_ toName: DatabaseName) -> CommitablePostgresStatement {
-            return AlterDatabaseRenameTo(dbName: dbName, toName: toName)
-        }
-        
-        public func ownerTo(_ owner: RoleSpec) -> CommitablePostgresStatement {
-            return AlterDatabaseOwnerTo(dbName: dbName, owner: owner)
-        }
-        
-        public func with(_ createDbOptList: CreateDbOptList) -> CommitablePostgresStatement {
-            return AlterDatabaseWith(dbName: dbName, createDbOptList: createDbOptList)
-        }
-        
-        public func opts(_ createDbOptList: CreateDbOptList) -> CommitablePostgresStatement {
-            return AlterDatabaseOpts(dbName: dbName, createDbOptList: createDbOptList)
-        }
-        
-        public func setTablespace(_ name: Name) -> CommitablePostgresStatement {
-            return AlterDatabaseSetTablespace(dbName: dbName, tablespace: name)
-        }
-        
-        public func setResetClause(_ setResetClause: SetResetClause) -> CommitablePostgresStatement {
-            return AlterDatabaseSetReset(dbName: dbName, setReset: setResetClause)
+        public func toSql() throws -> String {
+            switch self {
+            case .renameTo(let dbName, let toName):
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.RENAME) \(KW.TO) \(toName.sqlString());"
+            case .ownerTo(let dbName, let owner):
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.OWNER) \(KW.TO) \(owner.sqlString());"
+            case .with(let dbName, let optList):
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.WITH) \(optList.sqlString());"
+            case .setTablespace(let dbName, let tablespace):
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.SET) \(KW.TABLESPACE) \(tablespace.sqlString());"
+            case .setResetClause(let dbName, let clause):
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(clause.sqlString());"
+            }
         }
     }
 }
