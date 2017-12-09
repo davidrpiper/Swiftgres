@@ -18,9 +18,9 @@ public enum RoleSpec: PostgresGrammarType, ExpressibleByStringLiteral {
     }
     
     public init(_ stringValue: String) {
-        if stringValue == "CURRENT_USER" {
+        if stringValue == "\(KW.CURRENT_USER)" {
             self = .currentUser
-        } else if stringValue == "SESSION_USER" {
+        } else if stringValue == "\(KW.SESSION_USER)" {
             self = .sessionUser
         } else {
             self = .newOwner(Identifier(stringValue))
@@ -30,8 +30,8 @@ public enum RoleSpec: PostgresGrammarType, ExpressibleByStringLiteral {
     public var description: String {
         switch self {
         case .newOwner(let owner): return "\(owner)"
-        case .currentUser: return "CURRENT_USER"
-        case .sessionUser: return "SESSION_USER"
+        case .currentUser: return "\(KW.CURRENT_USER)"
+        case .sessionUser: return "\(KW.SESSION_USER)"
         }
     }
     

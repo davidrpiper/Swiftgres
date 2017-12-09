@@ -15,7 +15,7 @@ public protocol Connector {
     func execute(_ sqlStatement: PostgresStatement.AlterDefaultPrivilegesStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterDomainStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterEnumStatement) -> Bool
-    func execute(_ sqlStatement: PostgresStatement.AlterEventTrigStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.AlterEventTriggerStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterExtensionStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterExtensionContentsStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterFdwStatement) -> Bool

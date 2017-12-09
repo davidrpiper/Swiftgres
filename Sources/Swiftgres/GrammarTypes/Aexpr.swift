@@ -1,5 +1,5 @@
 /*
- * AlterEventTrigStmt.swift
+ *  Aexpr.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -8,8 +8,5 @@
  *  of the MIT license. See the LICENSE file for details.
  */
 
-public extension PostgresStatement {
-	public struct AlterEventTrigStatement {
-		
-	}
-}
+// TODO: This is a bit lenient
+public typealias Aexpr = String

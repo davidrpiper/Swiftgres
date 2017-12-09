@@ -1,5 +1,5 @@
 /*
- *  AlterEnum.swift
+ *  TableConstraint.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,8 +9,13 @@
  */
 
 // TODO
-public extension PostgresStatement {
-	public struct AlterEnumStatement {
-		
-	}
+public enum TableConstraint: PostgresGrammarType {
+    
+    public var description: String {
+        return ""
+    }
+    
+    public func isValid() -> Bool {
+        return false
+    }
 }

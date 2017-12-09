@@ -8,6 +8,7 @@
  *  of the MIT license. See the LICENSE file for details.
  */
 
+// TODO: Grammar and tests
 public extension PostgresStatement {
     public static func alterDatabase(_ dbName: DatabaseName, renameTo toName: DatabaseName) -> AlterDatabaseStatement {
         return .renameTo(dbName, toName: toName)
@@ -17,11 +18,11 @@ public extension PostgresStatement {
         return .ownerTo(dbName, owner: owner)
     }
     
-    public static func alterDatabase(_ dbName: DatabaseName, with optList: CreateDbOptList) -> AlterDatabaseStatement {
+    public static func alterDatabase(_ dbName: DatabaseName, with optList: CreateDbOptList? = nil) -> AlterDatabaseStatement {
         return .with(dbName, optList: optList)
     }
     
-    public static func alterDatabase(_ dbName: DatabaseName, _ optList: CreateDbOptList) -> AlterDatabaseStatement {
+    public static func alterDatabase(_ dbName: DatabaseName, _ optList: CreateDbOptList? = nil) -> AlterDatabaseStatement {
         return .with(dbName, optList: optList)
     }
     
@@ -36,7 +37,7 @@ public extension PostgresStatement {
     public enum AlterDatabaseStatement: CommitablePostgresStatement {
         case renameTo(DatabaseName, toName: DatabaseName)
         case ownerTo(DatabaseName, owner: RoleSpec)
-        case with(DatabaseName, optList: CreateDbOptList)
+        case with(DatabaseName, optList: CreateDbOptList?)
         case setTablespace(DatabaseName, tablespace: Name)
         case setResetClause(DatabaseName, clause: SetResetClause)
         
@@ -44,12 +45,23 @@ public extension PostgresStatement {
             switch self {
             case .renameTo(let dbName, let toName):
                 return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.RENAME) \(KW.TO) \(toName.sqlString());"
+                
             case .ownerTo(let dbName, let owner):
                 return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.OWNER) \(KW.TO) \(owner.sqlString());"
+                
             case .with(let dbName, let optList):
-                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.WITH) \(optList.sqlString());"
+                let withOptListSuffix: String
+                if let list = optList {
+                    withOptListSuffix = " \(KW.WITH) \(list)"
+                } else {
+                    withOptListSuffix = ""
+                }
+                
+                return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString())\(withOptListSuffix);"
+                
             case .setTablespace(let dbName, let tablespace):
                 return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(KW.SET) \(KW.TABLESPACE) \(tablespace.sqlString());"
+                
             case .setResetClause(let dbName, let clause):
                 return try "\(KW.ALTER) \(KW.DATABASE) \(dbName.sqlString()) \(clause.sqlString());"
             }

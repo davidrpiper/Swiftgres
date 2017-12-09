@@ -14,3 +14,5 @@
     Swiftgres is a Swift client for Postgres SQL databases.
     It allows typesafe and fluent SQL statement generation in Swift code.
  */
+
+public typealias PGStatement = Swiftgres.PostgresStatement

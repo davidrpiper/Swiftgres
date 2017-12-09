@@ -1,5 +1,5 @@
 /*
- *  AlterCollationTest.swift
+ *  AlterDatabaseTests.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -11,7 +11,7 @@
 import XCTest
 @testable import Swiftgres
 
-class AlterCollationTest: XCTestCase {
+class AlterDatabaseTests: XCTestCase {
     static var allTests = [
         ("testExample", testExample),
     ]
@@ -20,7 +20,6 @@ class AlterCollationTest: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        
         XCTAssertEqual(true, true)
     }
 }

@@ -8,6 +8,7 @@
  *  of the MIT license. See the LICENSE file for details.
  */
 
+// TODO: Move non-AlterCollationStmt statements to the appropriate Stmts
 public extension PostgresStatement {
     public static func alterCollation(_ name: AnyName, renameTo toName: AnyName) -> AlterCollationStatement {
         return .renameTo(name, toName: toName)

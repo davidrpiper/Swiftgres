@@ -8,6 +8,7 @@
  *  of the MIT license. See the LICENSE file for details.
  */
 
+// TODO: Grammar and tests
 public extension PostgresStatement {
     public static func alterDefaultPrivileges(_ defAclOptionList: DefAclOptionList, _ defAclAction: DefAclAction) -> AlterDefaultPrivilegesStatement {
         return AlterDefaultPrivilegesStatement(defAclOptionList: defAclOptionList, defAclAction: defAclAction)
