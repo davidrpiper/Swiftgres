@@ -1,5 +1,5 @@
 /*
- * VariableShowStmt.swift
+ *  VariableShow.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,7 +9,41 @@
  */
 
 public extension PostgresStatement {
-	public struct VariableShowStatement {
-		
+    public static func show(_ varName: VarName) -> VariableShowStatement {
+        return VariableShowStatement(property: .variable(varName))
+    }
+    
+    public static func show(_ what: ShowProperty) -> VariableShowStatement {
+        return VariableShowStatement(property: what)
+    }
+    
+    public enum ShowProperty {
+        case timezone
+        case transactionIsolationLevel
+        case session
+        case authorization
+        case all
+        case variable(VarName)
+    }
+    
+    public struct VariableShowStatement: CommitablePostgresStatement {
+        let property: ShowProperty
+        
+        public func toSql() throws -> String {
+            switch property {
+            case .timezone:
+                return "\(KW.SHOW) \(KW.TIME) \(KW.ZONE);"
+            case .transactionIsolationLevel:
+                return "\(KW.SHOW) \(KW.TRANSACTION) \(KW.ISOLATION) \(KW.LEVEL);"
+            case .session:
+                return "\(KW.SHOW) \(KW.SESSION);"
+            case .authorization:
+                return "\(KW.SHOW) \(KW.AUTHORIZATION);"
+            case .all:
+                return "\(KW.SHOW) \(KW.ALL);"
+            case .variable(let varName):
+                return try "\(KW.SHOW) \(varName.sqlString());"
+            }
+        }
 	}
 }

@@ -42,7 +42,7 @@ public protocol Connector {
     func execute(_ sqlStatement: PostgresStatement.AlterTypeStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AlterUserMappingStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.AnalyzeStatement) -> Bool
-    func execute(_ sqlStatement: PostgresStatement.CheckPointStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.CheckpointStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.ClosePortalStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.ClusterStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.CommentStatement) -> Bool

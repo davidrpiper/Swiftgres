@@ -18,4 +18,8 @@ struct BadGrammar {
     static func name() -> Name {
         return Name(" ")
     }
+    
+    static func varName() -> VarName {
+        return VarName("123")
+    }
 }
