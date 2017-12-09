@@ -22,4 +22,12 @@ struct BadGrammar {
     static func varName() -> VarName {
         return VarName("123")
     }
+    
+    static func cursorName() -> CursorName {
+        return CursorName("$")
+    }
+    
+    static func databaseName() -> DatabaseName {
+        return DatabaseName(";")
+    }
 }

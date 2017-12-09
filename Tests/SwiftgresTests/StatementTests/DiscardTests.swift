@@ -21,27 +21,27 @@ class DiscardTests: XCTestCase {
     ]
     
     func testDiscardAll() {
-        let statement = PGStatement.discard(.all)
+        let statement = PGStatement.discardAll()
         XCTAssertEqual(try! statement.toSql(), "DISCARD ALL;")
     }
     
     func testDiscardTemp() {
-        let statement = PGStatement.discard(.temp)
+        let statement = PGStatement.discardTemp()
         XCTAssertEqual(try! statement.toSql(), "DISCARD TEMP;")
     }
     
     func testDiscardTemporary() {
-        let statement = PGStatement.discard(.temporary)
+        let statement = PGStatement.discardTemporary()
         XCTAssertEqual(try! statement.toSql(), "DISCARD TEMPORARY;")
     }
     
     func testDiscardPlans() {
-        let statement = PGStatement.discard(.plans)
+        let statement = PGStatement.discardPlans()
         XCTAssertEqual(try! statement.toSql(), "DISCARD PLANS;")
     }
     
     func testDiscardSequences() {
-        let statement = PGStatement.discard(.sequences)
+        let statement = PGStatement.discardSequences()
         XCTAssertEqual(try! statement.toSql(), "DISCARD SEQUENCES;")
     }
 }

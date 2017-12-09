@@ -1,5 +1,5 @@
 /*
- * ClosePortalStmt.swift
+ *  ClosePortal.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,7 +9,25 @@
  */
 
 public extension PostgresStatement {
-	public struct ClosePortalStatement {
-		
+    public static func close(_ cursorName: CursorName) -> ClosePortalStatement {
+        return .cursor(cursorName)
+    }
+    
+    public static func closeAll() -> ClosePortalStatement {
+        return .all
+    }
+    
+    public enum ClosePortalStatement: CommitablePostgresStatement {
+        case cursor(CursorName)
+        case all
+        
+        public func toSql() throws -> String {
+            switch self {
+            case .cursor(let cursor):
+                return try "\(KW.CLOSE) \(cursor.sqlString());"
+            case .all:
+                return "\(KW.CLOSE) \(KW.ALL);"
+            }
+        }
 	}
 }

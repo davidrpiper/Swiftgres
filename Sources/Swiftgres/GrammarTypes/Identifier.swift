@@ -28,7 +28,11 @@ public struct Identifier: PostgresGrammarType, ExpressibleByStringLiteral {
     }
     
     public func isValid() -> Bool {
-        return isNotEmpty() && containsNoWhitespace() && startsWithValidCharacter() && containsValidCharacters()
+        return isNotEmpty() && doesNotContainSemicolon() && containsNoWhitespace() && startsWithValidCharacter() && containsValidCharacters()
+    }
+    
+    private func doesNotContainSemicolon() -> Bool {
+        return !value.contains(";")
     }
     
     private func containsNoWhitespace() -> Bool {

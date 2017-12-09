@@ -10,27 +10,39 @@
 
 public extension PostgresStatement {
     public static func show(_ varName: VarName) -> VariableShowStatement {
-        return VariableShowStatement(property: .variable(varName))
+        return .variable(varName)
     }
     
-    public static func show(_ what: ShowProperty) -> VariableShowStatement {
-        return VariableShowStatement(property: what)
+    public static func showTimezone() -> VariableShowStatement {
+        return .timezone
     }
     
-    public enum ShowProperty {
+    public static func showTransactionIsolationLevel() -> VariableShowStatement {
+        return .transactionIsolationLevel
+    }
+    
+    public static func showSession() -> VariableShowStatement {
+        return .session
+    }
+    
+    public static func showAuthorization() -> VariableShowStatement {
+        return .authorization
+    }
+    
+    public static func showAll() -> VariableShowStatement {
+        return .all
+    }
+    
+    public enum VariableShowStatement: CommitablePostgresStatement {
         case timezone
         case transactionIsolationLevel
         case session
         case authorization
         case all
         case variable(VarName)
-    }
-    
-    public struct VariableShowStatement: CommitablePostgresStatement {
-        let property: ShowProperty
         
         public func toSql() throws -> String {
-            switch property {
+            switch self {
             case .timezone:
                 return "\(KW.SHOW) \(KW.TIME) \(KW.ZONE);"
             case .transactionIsolationLevel:

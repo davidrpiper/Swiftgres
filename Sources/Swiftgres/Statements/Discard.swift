@@ -9,23 +9,35 @@
  */
 
 public extension PostgresStatement {
-    public static func discard(_ kind: DiscardKind) -> DiscardStatement {
-        return DiscardStatement(kind: kind)
+    public static func discardAll() -> DiscardStatement {
+        return .all
     }
     
-    public enum DiscardKind {
+    public static func discardTemp() -> DiscardStatement {
+        return .temp
+    }
+    
+    public static func discardTemporary() -> DiscardStatement {
+        return .temporary
+    }
+    
+    public static func discardPlans() -> DiscardStatement {
+        return .plans
+    }
+    
+    public static func discardSequences() -> DiscardStatement {
+        return .sequences
+    }
+    
+    public enum DiscardStatement: CommitablePostgresStatement {
         case all
         case temp
         case temporary
         case plans
         case sequences
-    }
-    
-    public struct DiscardStatement: CommitablePostgresStatement {
-        let kind: DiscardKind
         
         public func toSql() throws -> String {
-            switch kind {
+            switch self {
             case .all:
                 return "\(KW.DISCARD) \(KW.ALL);"
             case .temp:

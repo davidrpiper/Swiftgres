@@ -97,7 +97,7 @@ public protocol Connector {
     func execute(_ sqlStatement: PostgresStatement.DropTableSpaceStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.DropTransformStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.DropUserMappingStatement) -> Bool
-    func execute(_ sqlStatement: PostgresStatement.DropdbStatement) -> Bool
+    func execute(_ sqlStatement: PostgresStatement.DropDatabaseStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.ExecuteStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.ExplainStatement) -> Bool
     func execute(_ sqlStatement: PostgresStatement.FetchStatement) -> Bool

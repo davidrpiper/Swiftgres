@@ -9,6 +9,7 @@
  */
 
 public typealias Name = ColId
+public typealias CursorName = Name
 
 public struct NameList: PostgresGrammarType, ExpressibleByArrayLiteral {
     private let names: [Name]

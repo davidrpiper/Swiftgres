@@ -23,27 +23,27 @@ class VariableShowTests: XCTestCase {
     ]
     
     func testTimezone() {
-        let statement = PGStatement.show(.timezone)
+        let statement = PGStatement.showTimezone()
         XCTAssertEqual(try! statement.toSql(), "SHOW TIME ZONE;")
     }
     
     func testTransactionIsolationLevel() {
-        let statement = PGStatement.show(.transactionIsolationLevel)
+        let statement = PGStatement.showTransactionIsolationLevel()
         XCTAssertEqual(try! statement.toSql(), "SHOW TRANSACTION ISOLATION LEVEL;")
     }
     
     func testSession() {
-        let statement = PGStatement.show(.session)
+        let statement = PGStatement.showSession()
         XCTAssertEqual(try! statement.toSql(), "SHOW SESSION;")
     }
     
     func testAuthorization() {
-        let statement = PGStatement.show(.authorization)
+        let statement = PGStatement.showAuthorization()
         XCTAssertEqual(try! statement.toSql(), "SHOW AUTHORIZATION;")
     }
     
     func testAll() {
-        let statement = PGStatement.show(.all)
+        let statement = PGStatement.showAll()
         XCTAssertEqual(try! statement.toSql(), "SHOW ALL;")
     }
     
@@ -56,7 +56,6 @@ class VariableShowTests: XCTestCase {
         let statement = PGStatement.show(BadGrammar.varName())
         XCTAssertThrowsError(try statement.toSql())
     }
-    
 }
 
 
