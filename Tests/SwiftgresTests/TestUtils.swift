@@ -30,4 +30,8 @@ struct BadGrammar {
     static func databaseName() -> DatabaseName {
         return DatabaseName(";")
     }
+    
+    static func colId() -> ColId {
+        return ColId(" 1")
+    }
 }

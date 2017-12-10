@@ -1,5 +1,5 @@
 /*
- * UnlistenStmt.swift
+ *  Unlisten.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper
@@ -9,7 +9,25 @@
  */
 
 public extension PostgresStatement {
-	public struct UnlistenStatement {
-		
+    public static func unlisten(_ channel: ColId) -> UnlistenStatement {
+        return .channel(channel)
+    }
+    
+    public static func unlistenAll() -> UnlistenStatement {
+        return .all
+    }
+    
+    public enum UnlistenStatement: CommitablePostgresStatement {
+        case channel(ColId)
+        case all
+        
+        public func toSql() throws -> String {
+            switch self {
+            case .channel(let channel):
+                return try "\(KW.UNLISTEN) \(channel.sqlString());"
+            case .all:
+                return "\(KW.UNLISTEN) '*';"
+            }
+        }
 	}
 }
