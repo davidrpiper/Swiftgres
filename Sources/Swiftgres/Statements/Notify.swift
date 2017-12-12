@@ -1,5 +1,5 @@
 /*
- * NotifyStmt.swift
+ *  Notify.swift
  *  Swiftgres
  *
  *  Copyright (c) 2018 David Piper, @_davidpiper

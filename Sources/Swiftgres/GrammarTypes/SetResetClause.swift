@@ -43,7 +43,7 @@ public enum ResetRest: PostgresGrammarType {
     case transactionIsolationLevel
     case sessionAuthorization
     case all
-    case genericName(VarName)
+    case variable(VarName)
     
     public var description: String {
         switch self {
@@ -55,14 +55,14 @@ public enum ResetRest: PostgresGrammarType {
             return "\(KW.SESSION) \(KW.AUTHORIZATION)"
         case .all:
             return "\(KW.ALL)"
-        case .genericName(let varName):
+        case .variable(let varName):
             return "\(varName)"
         }
     }
     
     public func isValid() -> Bool {
         switch self {
-        case .genericName(let varName): return varName.isValid()
+        case .variable(let varName): return varName.isValid()
         default: return true
         }
     }
