@@ -9,6 +9,7 @@
  */
 
 // TODO: Grammar and tests
+// Also includes AlterDatabaseSetStmt
 public extension PostgresStatement {
     public static func alterDatabase(_ dbName: DatabaseName, renameTo toName: DatabaseName) -> AlterDatabaseStatement {
         return .renameTo(dbName, toName: toName)
