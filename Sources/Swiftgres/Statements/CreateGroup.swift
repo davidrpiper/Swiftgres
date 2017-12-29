@@ -10,7 +10,7 @@
 
 // TODO: Tests (same as CreateRole but with Group)
 public extension PostgresStatement {
-    public static func createGroup(_ group: RoleSpec, with opts: CreateRoleOptionList? = nil) -> CreateRoleStatement {
+    public static func createGroup(_ group: RoleSpec, with opts: CreateRoleOptionList? = nil) -> CreateGroupStatement {
         return CreateGroupStatement(group: group, opts: opts)
     }
     

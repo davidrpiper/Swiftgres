@@ -9,32 +9,109 @@
  */
 
 public enum SetResetClause: PostgresGrammarType {
-    case SET(SetRest)
-    case RESET(ResetRest)
+    case set(SetRest)
+    case reset(ResetRest)
     
     public var description: String {
         switch self {
-        case .SET(let setRest): return "\(KW.SET) \(setRest)"
-        case .RESET(let resetRest): return "\(KW.RESET) \(resetRest)"
+        case .set(let setRest): return "\(KW.SET) \(setRest)"
+        case .reset(let resetRest): return "\(KW.RESET) \(resetRest)"
         }
     }
     
     public func isValid() -> Bool {
         switch self {
-        case .SET(let setRest): return setRest.isValid()
-        case .RESET(let resetRest): return resetRest.isValid()
+        case .set(let setRest): return setRest.isValid()
+        case .reset(let resetRest): return resetRest.isValid()
         }
     }
 }
 
-// TODO
 public enum SetRest: PostgresGrammarType {
+    case transaction(TransactionModeList)
+    case sessionCharacteristicsAsTransaction(TransactionModeList)
+    case variableFromCurrent(VarName)
+    case timeZone(String) // TODO? A little loosely typed...
+    case catalog(String)
+    case schema(String)
+    case names
+    case namesWithEncoding(String)
+    case role(String)
+    case sessionAuthorization(String)
+    case sessionAuthorizationDefault
+    case xmlOption // TODO
+    case transactionSnapshot(String)
+    case variable(VarName, to: VarList)
+    case variableToDefault(VarName)
+    
     public var description: String {
-        return ""
+        switch self {
+        case .transaction(let transactionModeList):
+            return ""
+        case .sessionCharacteristicsAsTransaction(let transactionModeList):
+            return ""
+        case .variableFromCurrent(let varName):
+            return ""
+        case .timeZone(let tz):
+            return ""
+        case .catalog(let catalogString):
+            return ""
+        case .schema(let schemaString):
+            return ""
+        case .names:
+            return ""
+        case .namesWithEncoding(let encodingString):
+            return ""
+        case .role(let roleString):
+            return ""
+        case .sessionAuthorization(let saString):
+            return ""
+        case .sessionAuthorizationDefault:
+            return ""
+        case .xmlOption:
+            return "" // TODO
+        case .transactionSnapshot(let snapshotString):
+            return ""
+        case .variable(let varName, let varList):
+            return ""
+        case .variableToDefault(let varName):
+            return ""
+        }
     }
     
     public func isValid() -> Bool {
-        return false
+        switch self {
+        case .transaction(let transactionModeList):
+            return transactionModeList.isValid()
+        case .sessionCharacteristicsAsTransaction(let transactionModeList):
+            return transactionModeList.isValid()
+        case .variableFromCurrent(let varName):
+            return varName.isValid()
+        case .timeZone(_):
+            return true
+        case .catalog(_):
+            return true
+        case .schema(_):
+            return true
+        case .names:
+            return true
+        case .namesWithEncoding(_):
+            return true
+        case .role(_):
+            return true
+        case .sessionAuthorization(_):
+            return true
+        case .sessionAuthorizationDefault:
+            return true
+        case .xmlOption:
+            return false // TODO
+        case .transactionSnapshot(_):
+            return true
+        case .variable(let varName, let varList):
+            return varName.isValid() && varList.isValid()
+        case .variableToDefault(let varName):
+            return varName.isValid()
+        }
     }
 }
 
